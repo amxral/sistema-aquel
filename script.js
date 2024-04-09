@@ -1,12 +1,12 @@
 function gerarNome() {
     // Requisição para o arquivo de nomes
-    fetch('pessoas.txt')
+    fetch('data/pessoas.txt')
         .then(response => response.text())
         .then(nomesText => {
             const nomes = nomesText.split('\n');
 
             // Requisição para o arquivo de nomes de empresas
-            fetch('empresas.txt')
+            fetch('data/empresas.txt')
                 .then(response => response.text())
                 .then(empresasText => {
                     const empresas = empresasText.split('\n');
