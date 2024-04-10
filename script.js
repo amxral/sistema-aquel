@@ -21,17 +21,21 @@ function gerarNome() {
                     // Selecionando uma empresa aleatória
                     const empresaAleatoria = empresas[Math.floor(Math.random() * empresas.length)];
                     // Gerando um número aleatório entre 200 e 5 milhões
-                    const numeroAleatorio = (Math.random() * (1000000 - 200) + 200);
+                    const numeroAleatorio = Math.random() * (1000000 - 200) + 200;
                     // Gerando datas com um intervalo de 1 mês
                     const [dataInicial, dataFinal] = gerarIntervaloDatas();
 
-                    // Exibindo o nome pessoal aleatório
+                    // Calculando o valor bruto, líquido e a taxa
+                    const valorBruto = numeroAleatorio;
+                    const taxa = Math.random() * (4.6 - 0.2) + 0.2; // Porcentagem entre 0.2% e 5%
+                    const valorLiquido = valorBruto * (1 - taxa / 100);
+
+                    // Exibindo as informações na página
                     document.getElementById('nomePessoal').innerText = nomeAleatorio;
-                    // Exibindo o nome da empresa aleatória
                     document.getElementById('nomeEmpresa').innerText = empresaAleatoria;
-                    // Exibindo o número aleatório no formato BRL com duas casas decimais
-                    document.getElementById('numeroAleatorio').innerText = formatarNumeroBRL(numeroAleatorio);
-                    // Exibindo as datas aleatórias
+                    document.getElementById('valorBruto').innerText = formatarNumeroBRL(valorBruto);
+                    document.getElementById('valorLiquido').innerText = formatarNumeroBRL(valorLiquido);
+                    document.getElementById('taxa').innerText = taxa.toFixed(2) + '%';
                     document.getElementById('dataAleatoria').innerText = `${formatarData(dataInicial)} - ${formatarData(dataFinal)}`;
 
                     // Iniciar o cronômetro
@@ -93,11 +97,14 @@ function iniciarCronometro() {
     
     // Iniciar o cronômetro
     intervaloCronometro = setInterval(atualizarCronometro, 1000);
-}
+} 
+// Botão de limpar
 function limparInformacoes() {
     document.getElementById('nomePessoal').innerText = '';
     document.getElementById('nomeEmpresa').innerText = '';
-    document.getElementById('numeroAleatorio').innerText = '';
+    document.getElementById('valorBruto').innerText = '';
+    document.getElementById('valorLiquido').innerText = '';
+    document.getElementById('taxa').innerText = '';
     document.getElementById('dataAleatoria').innerText = '';
     document.getElementById('cronometro').innerText = '00:00:00';
     clearInterval(intervaloCronometro);

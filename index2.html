@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="style02.css">
+    <title>Sistema Aquel</title>
+</head>
+<body>
+    <h1>Sistema Simulator - Aquel</h1>
+    <div id="main">
+        
+        <div id="btn">
+            <button onclick="gerarNome()">Gerar Informações</button>
+            <button id="limparButton" onclick="limparInformacoes()">Limpar</button>
+        </div>
+
+        <h2>Informações Geradas:</h2>
+
+        <div id="tab">
+            <table>
+                <tr>
+                    <th>Nome Pessoal</th>
+                    <td id="nomePessoal"></td>
+                </tr>
+                <tr>
+                    <th>Empresa</th>
+                    <td id="nomeEmpresa"></td>
+                </tr>
+                <tr>
+                    <th>Valor Bruto</th>
+                    <td id="valorBruto"></td>
+                </tr>
+                <tr>
+                    <th>Valor Líquido</th>
+                    <td id="valorLiquido"></td>
+                </tr>
+                <tr>
+                    <th>Taxa (%)</th>
+                    <td id="taxa"></td>
+                </tr>
+                <tr>
+                    <th>Data</th>
+                    <td id="dataAleatoria"></td>
+                </tr>
+                <tr>
+                    <th>Tempo de Chamada</th>
+                    <td id="cronometro">00:00:00</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
