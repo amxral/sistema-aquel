@@ -94,3 +94,11 @@ function iniciarCronometro() {
     // Iniciar o cronômetro
     intervaloCronometro = setInterval(atualizarCronometro, 1000);
 }
+function limparInformacoes() {
+    document.getElementById('nomePessoal').innerText = '';
+    document.getElementById('nomeEmpresa').innerText = '';
+    document.getElementById('numeroAleatorio').innerText = '';
+    document.getElementById('dataAleatoria').innerText = '';
+    document.getElementById('cronometro').innerText = '00:00:00';
+    clearInterval(intervaloCronometro);
+}

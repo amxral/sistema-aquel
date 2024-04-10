@@ -10,19 +10,23 @@
     <h1>Sistema Simulator - Aquel</h1>
     <div id="main">
         
-        <div id="btn"><button onclick="gerarNome()">Gerar Informações</button></div>
+        <div id="btn">
+            <button onclick="gerarNome()">Gerar Informações</button>
+            <button id="limparButton" onclick="limparInformacoes()">Limpar</button>
+
+        </div>
 
         <h2>Informações Geradas:</h2>
 
-        <p><strong>Nome Pessoal:</strong> 
+        <p><strong>Nome Pessoal:</strong> <br>
             <span id="nomePessoal"></span></p>
-        <p><strong>Empresa:</strong> 
+        <p><strong>Empresa:</strong> <br>
             <span id="nomeEmpresa"></span></p>
-        <p><strong>Valor para antecipar:</strong> 
+        <p><strong>Valor para antecipar:</strong><br> 
             <span id="numeroAleatorio"></span></p>
-        <p><strong>Data:</strong> 
+        <p><strong>Data:</strong> <br>
             <span id="dataAleatoria"></span></p>
-        <p><strong>Tempo de Chamada:</strong> 
+        <p><strong>Tempo de Chamada:</strong> <br>
             <span id="cronometro">00:00:00</span></p>
     </div>
 
