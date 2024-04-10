@@ -1,4 +1,9 @@
+let intervaloCronometro; // Variável para armazenar o intervalo do cronômetro
+
 function gerarNome() {
+    // Limpar o intervalo do cronômetro se existir
+    clearInterval(intervaloCronometro);
+
     // Requisição para o arquivo de nomes
     fetch('data/pessoas.txt')
         .then(response => response.text())
@@ -16,18 +21,18 @@ function gerarNome() {
                     // Selecionando uma empresa aleatória
                     const empresaAleatoria = empresas[Math.floor(Math.random() * empresas.length)];
                     // Gerando um número aleatório entre 200 e 5 milhões
-                    const numeroAleatorio = (Math.random() * (5000000 - 200) + 200).toFixed(2);
-                    // Gerando uma data com a distância de 1 mês
-                    const dataAleatoria = gerarDataAleatoria();
+                    const numeroAleatorio = (Math.random() * (1000000 - 200) + 200);
+                    // Gerando datas com um intervalo de 1 mês
+                    const [dataInicial, dataFinal] = gerarIntervaloDatas();
 
                     // Exibindo o nome pessoal aleatório
                     document.getElementById('nomePessoal').innerText = nomeAleatorio;
                     // Exibindo o nome da empresa aleatória
                     document.getElementById('nomeEmpresa').innerText = empresaAleatoria;
-                    // Exibindo o número aleatório no formato BRL
-                    document.getElementById('numeroAleatorio').innerText = 'R$ ' + formatarNumeroBRL(numeroAleatorio);
-                    // Exibindo a data aleatória
-                    document.getElementById('dataAleatoria').innerText = dataAleatoria.toLocaleDateString('pt-BR');
+                    // Exibindo o número aleatório no formato BRL com duas casas decimais
+                    document.getElementById('numeroAleatorio').innerText = formatarNumeroBRL(numeroAleatorio);
+                    // Exibindo as datas aleatórias
+                    document.getElementById('dataAleatoria').innerText = `${formatarData(dataInicial)} - ${formatarData(dataFinal)}`;
 
                     // Iniciar o cronômetro
                     iniciarCronometro();
@@ -36,16 +41,27 @@ function gerarNome() {
         })
         .catch(error => console.error('Erro ao ler o arquivo de nomes:', error));
 }
-// Função para formatar o número no formato BRL
+
+// Função para formatar o número no formato BRL com duas casas decimais
 function formatarNumeroBRL(numero) {
-    return numero.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    return 'R$ ' + numero.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
 }
 
-// Função para gerar uma data com a distância de 1 mês
-function gerarDataAleatoria() {
+// Função para formatar a data
+function formatarData(data) {
+    const dia = String(data.getDate()).padStart(2, '0');
+    const mes = String(data.getMonth() + 1).padStart(2, '0');
+    return `${dia}/${mes}`;
+}
+
+// Função para gerar duas datas com um intervalo de 1 mês
+function gerarIntervaloDatas() {
     const hoje = new Date();
-    hoje.setMonth(hoje.getMonth() + 1);
-    return hoje;
+    const dataInicial = new Date(hoje);
+    dataInicial.setDate(dataInicial.getDate() - 15); // Definindo 15 dias antes da data atual
+    const dataFinal = new Date(dataInicial);
+    dataFinal.setMonth(dataFinal.getMonth() + 1); // Definindo 1 mês após a data inicial
+    return [dataInicial, dataFinal];
 }
 
 // Função para iniciar o cronômetro
@@ -65,8 +81,16 @@ function iniciarCronometro() {
                 horas++;
             }
         }
-        cronometroElement.innerText = `${horas}:${minutos}:${segundos}`;
+        // Formatando os números com dois dígitos
+        const horasFormatadas = horas < 10 ? '0' + horas : horas;
+        const minutosFormatados = minutos < 10 ? '0' + minutos : minutos;
+        const segundosFormatados = segundos < 10 ? '0' + segundos : segundos;
+        cronometroElement.innerText = `${horasFormatadas}:${minutosFormatados}:${segundosFormatados}`;
     };
 
-    setInterval(atualizarCronometro, 1000);
+    // Limpar o intervalo do cronômetro se existir
+    clearInterval(intervaloCronometro);
+    
+    // Iniciar o cronômetro
+    intervaloCronometro = setInterval(atualizarCronometro, 1000);
 }
