@@ -20,7 +20,7 @@ function gerarNome() {
                     const nomeAleatorio = nomes[Math.floor(Math.random() * nomes.length)];
                     // Selecionando uma empresa aleatória
                     const empresaAleatoria = empresas[Math.floor(Math.random() * empresas.length)];
-                    // Gerando um número aleatório entre 200 e 5 milhões
+                    // Gerando um número aleatório entre 200 e 1 milhão
                     const numeroAleatorio = Math.random() * (1000000 - 200) + 200;
                     // Gerando datas com um intervalo de 1 mês
                     const [dataInicial, dataFinal] = gerarIntervaloDatas();
@@ -48,13 +48,14 @@ function gerarNome() {
 
 // Função para formatar o número no formato BRL com duas casas decimais
 function formatarNumeroBRL(numero) {
-    return 'R$ ' + numero.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+    return 'R$ ' + numero.toLocaleString('pt-BR', { minimumFractionDigits: 1 });
 }
 
 // Função para formatar a data
 function formatarData(data) {
     const dia = String(data.getDate()).padStart(2, '0');
-    const mes = String(data.getMonth() + 1).padStart(2, '0');
+    const mes = String(data.getMonth() + 1
+).padStart(2, '0');
     return `${dia}/${mes}`;
 }
 
