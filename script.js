@@ -20,14 +20,21 @@ function gerarNome() {
                     const nomeAleatorio = nomes[Math.floor(Math.random() * nomes.length)];
                     // Selecionando uma empresa aleatória
                     const empresaAleatoria = empresas[Math.floor(Math.random() * empresas.length)];
-                    // Gerando um número aleatório entre 200 e 1 milhão
-                    const numeroAleatorio = Math.random() * (1000000 - 200) + 200;
-                    // Gerando datas com um intervalo de 1 mês
-                    const [dataInicial, dataFinal] = gerarIntervaloDatas();
+                    // Gerando um número aleatório entre 200 e 1 milhões
+                    const valorBruto = Math.random() * (1000000 - 200) + 200;
 
-                    // Calculando o valor bruto, líquido e a taxa
-                    const valorBruto = numeroAleatorio;
-                    const taxa = Math.random() * (4.6 - 0.2) + 0.2; // Porcentagem entre 0.2% e 5%
+                    // Calculando a taxa com base no valor bruto
+                    const taxa = calcularTaxa(valorBruto);
+                    // Calculando o intervalo de meses com base no valor bruto
+                    const intervaloMeses = calcularIntervaloMeses(valorBruto);
+
+                    // Gerando datas com base no intervalo de meses
+                    const [dataInicial, dataFinal] = gerarIntervaloDatas(intervaloMeses);
+                    
+                    // Calculando a taxa com base no valor bruto e no intervalo de meses
+                    const taxa1 = calcularTaxa(valorBruto, intervaloMeses);
+
+                    // Calculando o valor líquido
                     const valorLiquido = valorBruto * (1 - taxa / 100);
 
                     // Exibindo as informações na página
@@ -46,26 +53,53 @@ function gerarNome() {
         .catch(error => console.error('Erro ao ler o arquivo de nomes:', error));
 }
 
+// Função para calcular a taxa com base no valor bruto e no intervalo de meses
+function calcularTaxa(valorBruto, intervaloMeses) {
+    // Quanto maior for o valor bruto, maior será a taxa
+    if (valorBruto < 500000) {
+        if (intervaloMeses <= 6) {
+            return Math.random() * (1.6 - 0.2) + 0.2; // Taxa entre 0.2% e 1.6%
+        } else {
+            return Math.random() * (3.6 - 1.7) + 1.7; // Taxa entre 1.7% e 3.6%
+        }
+    } else {
+        if (intervaloMeses > 6) {
+            return Math.random() * (3.6 - 1.7) + 1.7; // Taxa entre 2.7% e 4.6%
+        } else {
+            return Math.random() * (4 - 3.7) + 3.7; // Taxa entre 4.7% e 5%
+        }
+    }
+}
+
+// Função para calcular o intervalo de meses com base no valor bruto
+function calcularIntervaloMeses(valorBruto) {
+    // Quanto maior for o valor bruto, maior será o intervalo de meses
+    if (valorBruto < 500000) {
+        return Math.floor(Math.random() * 6) + 1; // Receber entre 1 e 6 meses
+    } else {
+        return Math.floor(Math.random() * 7) + 6; // Receber entre 6 e 12 meses
+    }
+}
+
 // Função para formatar o número no formato BRL com duas casas decimais
 function formatarNumeroBRL(numero) {
-    return 'R$ ' + numero.toLocaleString('pt-BR', { minimumFractionDigits: 1 });
+    return 'R$ ' + numero.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
 }
 
 // Função para formatar a data
 function formatarData(data) {
     const dia = String(data.getDate()).padStart(2, '0');
-    const mes = String(data.getMonth() + 1
-).padStart(2, '0');
+    const mes = String(data.getMonth() + 0).padStart(2, '0');
     return `${dia}/${mes}`;
 }
 
-// Função para gerar duas datas com um intervalo de 1 mês
-function gerarIntervaloDatas() {
+// Função para gerar datas com base no intervalo de meses
+function gerarIntervaloDatas(intervaloMeses) {
     const hoje = new Date();
     const dataInicial = new Date(hoje);
-    dataInicial.setDate(dataInicial.getDate() - 15); // Definindo 15 dias antes da data atual
+    dataInicial.setMonth(dataInicial.getMonth() + 1); // Adicionar 1 mês à data atual
     const dataFinal = new Date(dataInicial);
-    dataFinal.setMonth(dataFinal.getMonth() + 1); // Definindo 1 mês após a data inicial
+    dataFinal.setMonth(dataFinal.getMonth() + intervaloMeses); // Adicionar o intervalo de meses
     return [dataInicial, dataFinal];
 }
 
@@ -99,6 +133,17 @@ function iniciarCronometro() {
     // Iniciar o cronômetro
     intervaloCronometro = setInterval(atualizarCronometro, 1000);
 } 
+
+    // Função para pausar o cronômetro
+function pausarCronometro() {
+    clearInterval(intervaloCronometro);
+}
+
+// Função para resetar o cronômetro
+function resetarCronometro() {
+    clearInterval(intervaloCronometro);
+    document.getElementById('cronometro').innerText = '00:00:00';
+}
 // Botão de limpar
 function limparInformacoes() {
     document.getElementById('nomePessoal').innerText = '';
