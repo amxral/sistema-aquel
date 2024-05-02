@@ -5,13 +5,13 @@ function gerarNome() {
     clearInterval(intervaloCronometro);
 
     // Requisição para o arquivo de nomes
-    fetch('data/pessoas.txt')
+    fetch('pessoas.txt')
         .then(response => response.text())
         .then(nomesText => {
             const nomes = nomesText.split('\n');
 
             // Requisição para o arquivo de nomes de empresas
-            fetch('data/empresas.txt')
+            fetch('empresas.txt')
                 .then(response => response.text())
                 .then(empresasText => {
                     const empresas = empresasText.split('\n');
